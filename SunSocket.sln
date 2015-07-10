@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.22823.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket", "SunSocket\SunSocket.csproj", "{D71E1FF0-869E-450C-8AA6-93E044D4EF7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.Core", "SunSocket.Core\SunSocket.Core.csproj", "{4F79DD3A-608B-4422-8689-F36849978477}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.Framework", "SunSocket.Framework\SunSocket.Framework.csproj", "{1C5A17AA-3FBE-4C65-B148-28A2BFD35C21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.Client", "SunSocket.Client\SunSocket.Client.csproj", "{A93A33A2-C87B-46BC-B30B-3CA7931C374B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.Udp", "SunSocket.Udp\SunSocket.Udp.csproj", "{B8B60E74-FC96-4902-955C-3C6F8E06A0F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.UdpClient", "SunSocket.UdpClient\SunSocket.UdpClient.csproj", "{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D71E1FF0-869E-450C-8AA6-93E044D4EF7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D71E1FF0-869E-450C-8AA6-93E044D4EF7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D71E1FF0-869E-450C-8AA6-93E044D4EF7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D71E1FF0-869E-450C-8AA6-93E044D4EF7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F79DD3A-608B-4422-8689-F36849978477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F79DD3A-608B-4422-8689-F36849978477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F79DD3A-608B-4422-8689-F36849978477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F79DD3A-608B-4422-8689-F36849978477}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C5A17AA-3FBE-4C65-B148-28A2BFD35C21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C5A17AA-3FBE-4C65-B148-28A2BFD35C21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C5A17AA-3FBE-4C65-B148-28A2BFD35C21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C5A17AA-3FBE-4C65-B148-28A2BFD35C21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A93A33A2-C87B-46BC-B30B-3CA7931C374B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A93A33A2-C87B-46BC-B30B-3CA7931C374B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A93A33A2-C87B-46BC-B30B-3CA7931C374B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A93A33A2-C87B-46BC-B30B-3CA7931C374B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B60E74-FC96-4902-955C-3C6F8E06A0F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B60E74-FC96-4902-955C-3C6F8E06A0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B60E74-FC96-4902-955C-3C6F8E06A0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B60E74-FC96-4902-955C-3C6F8E06A0F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
