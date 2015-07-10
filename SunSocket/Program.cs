@@ -7,6 +7,7 @@ using System.Net;
 using SunSocket.Framework;
 using SunSocket.Framework.Config;
 using SunSocket.Framework.Session;
+using SunSocket.Core;
 using SunSocket.Core.Protocol;
 using SunSocket.Core.Session;
 
@@ -17,35 +18,17 @@ namespace SunSocket
         static List<string> li = new List<string>();
         static void Main(string[] args)
         {
-            var config = new ConfigInfo();
+            var loger = new Loger();
+            var config = new TcpServerConfig();
             config.BufferSize = 1024 * 4;
             config.MaxConnections = 100000;
-            config.LConfig = new ListenerConfig();
-            config.LConfig.Name = "one";
-            config.LConfig.IP = "192.168.1.105";
-            config.LConfig.Port = 9989;
-            Listener listener = new Listener(config);
+            Framework.Listener listener = new Framework.Listener(config,new ServerEndPoint() {Name="one",IP="127.0.0.1",Port=9989 }, loger);
             listener.AsyncServer.OnReceived += ReceiveCommond;
             listener.Start();
-            var configOne = new ConfigInfo();
-            configOne.BufferSize = 1024 * 4;
-            configOne.MaxConnections = 100000;
-            configOne.LConfig = new ListenerConfig();
-            configOne.LConfig.Name = "two";
-            configOne.LConfig.IP = "192.168.1.105";
-            configOne.LConfig.Port = 9988;
-            Listener listenerOne = new Listener(configOne);
+            Framework.Listener listenerOne = new Framework.Listener(config, new ServerEndPoint() { Name = "one", IP = "127.0.0.1", Port = 9988 }, loger);
             listenerOne.AsyncServer.OnReceived += ReceiveCommond;
             listenerOne.Start();
             Console.WriteLine("服务器已启动");
-            //Task.Run(() =>
-            //{
-            //    while (true)
-            //    {
-            //        Task.Delay(2000).Wait();
-            //        Console.WriteLine(listener.AsyncServer.OnlineList.Count());
-            //    }
-            //});
             Console.ReadLine();
         }
         static byte[] data = Encoding.UTF8.GetBytes("测试数据服务器返回");
@@ -54,13 +37,75 @@ namespace SunSocket
         {
             TcpSession session = sender as TcpSession;
             string msg = Encoding.UTF8.GetString(cmd.Data);
-            //li.Add(string.Format("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg));
             Console.WriteLine("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg);
-            //for (int i = 0; i < 3; i++)
-            //{
-           
             session.SendAsync(sdata);
-            //}
+        }
+    }
+    public class Loger : ILoger
+    {
+        public void Debug(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Debug(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Fatal(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Fatal(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Log(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Trace(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Trace(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warning(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warning(string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

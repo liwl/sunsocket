@@ -8,6 +8,7 @@ using SunSocket.Core.Buffer;
 using SunSocket.Core.Protocol;
 using SunSocket.Core.Session;
 using SunSocket.Framework.Buffer;
+using SunSocket.Core;
 
 namespace SunSocket.Framework.Protocol
 {
@@ -24,6 +25,7 @@ namespace SunSocket.Framework.Protocol
         private IFixedBuffer InterimPacketBuffer;
         //数据接收缓冲器队列
         private Queue<IFixedBuffer> ReceiveBuffers;
+        ILoger loger;
         //数据发送缓冲器
         public IFixedBuffer SendBuffer { get; set; }
 
@@ -36,8 +38,9 @@ namespace SunSocket.Framework.Protocol
         private SendCommond NoComplateCmd = null;//未完全发送指令
         int isSend = 0;//发送状态
         private Queue<SendCommond> cmdQueue = new Queue<SendCommond>();//指令发送队列
-        public TcpClientPacketProtocol(int bufferSize, int bufferPoolSize)
+        public TcpClientPacketProtocol(int bufferSize, int bufferPoolSize,ILoger loger)
         {
+            this.loger = loger;
             if (BufferPool == null)
                 BufferPool = new FixedBufferPool(bufferPoolSize);
             ReceiveBuffers = new Queue<IFixedBuffer>();
@@ -136,7 +139,6 @@ namespace SunSocket.Framework.Protocol
                     }
                 }
             }
-
             return count == 0;
         }
 
@@ -238,8 +240,8 @@ namespace SunSocket.Framework.Protocol
             {
                 lock (closeLock)
                 {
-                    //if (Session.Server != null)
-                    //    Session.Server.CloseSession(Session);
+                    if (Session.ConnectSocket != null)
+                        Session.DisConnect();
                 }
             }
         }
@@ -255,8 +257,8 @@ namespace SunSocket.Framework.Protocol
                     { //如果处理数据返回失败，则断开连接
                         lock (closeLock)
                         {
-                            //if (Session.Server != null)
-                            //    Session.Server.CloseSession(Session);
+                            if (Session.ConnectSocket != null)
+                                Session.DisConnect();
                         }
                     }
                 }
@@ -266,8 +268,8 @@ namespace SunSocket.Framework.Protocol
             {
                 lock (closeLock)
                 {
-                    //if (Session.Server != null)
-                    //    Session.Server.CloseSession(Session);//断开连接
+                    if (Session.ConnectSocket != null)
+                        Session.DisConnect();
                 }
             }
         }

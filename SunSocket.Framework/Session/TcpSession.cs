@@ -8,14 +8,14 @@ namespace SunSocket.Framework.Session
 {
     public class TcpSession : ITcpSession
     {
-        public TcpSession()
+        ILoger loger;
+        public TcpSession(ILoger loger)
         {
+            this.loger = loger;
             SessionId = ObjectId.GenerateNewId().ToString();//生成唯一sesionId
             SessionData = new DataContainer();
             ReceiveEventArgs = new SocketAsyncEventArgs();
-            // ReceiveEventArgs.UserToken = this;
             SendEventArgs = new SocketAsyncEventArgs();
-            //SendEventArgs.UserToken = this;
         }
         
         public string SessionId{get; set;}
@@ -100,7 +100,7 @@ namespace SunSocket.Framework.Session
             }
             catch (Exception e)
             {
-                //日志记录
+                loger.Fatal(e);
             }
         }
         //清理session
@@ -118,7 +118,7 @@ namespace SunSocket.Framework.Session
             catch (Exception e)
             {
                 //日志记录
-                // Program.Logger.ErrorFormat("CloseClientSocket Disconnect client {0} error, message: {1}", socketInfo, E.Message);
+                loger.Fatal(string.Format("CloseClientSocket Disconnect client {0} error, message: {1}", ConnectSocket, e.Message));
             }
             ConnectSocket.Close();
             ConnectSocket = null;

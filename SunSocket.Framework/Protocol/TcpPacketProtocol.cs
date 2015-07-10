@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
+using SunSocket.Core;
 using SunSocket.Core.Buffer;
 using SunSocket.Core.Protocol;
 using SunSocket.Core.Session;
@@ -18,6 +19,7 @@ namespace SunSocket.Framework.Protocol
         static int intByteLength = sizeof(int), shortByteLength = sizeof(short);
         static int checkandCmdLength = intByteLength + shortByteLength;
         private object clearLock = new object();
+        ILoger loger;
         //缓冲器池
         private static FixedBufferPool BufferPool;
         private int alreadyReceivePacketLength, needReceivePacketLenght;
@@ -36,8 +38,9 @@ namespace SunSocket.Framework.Protocol
         private SendCommond NoComplateCmd = null;//未完全发送指令
         int isSend = 0;//发送状态
         private Queue<SendCommond> cmdQueue = new Queue<SendCommond>();//指令发送队列
-        public TcpPacketProtocol(int bufferSize,int bufferPoolSize)
+        public TcpPacketProtocol(int bufferSize,int bufferPoolSize,ILoger loger)
         {
+            this.loger = loger;
             if(BufferPool==null)
                 BufferPool = new FixedBufferPool(bufferPoolSize);
             ReceiveBuffers = new Queue<IFixedBuffer>();

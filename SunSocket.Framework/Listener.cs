@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SunSocket.Core;
 using SunSocket.Core.Protocol;
 using SunSocket.Core.Session;
+using SunSocket.Framework.Config;
 
 namespace SunSocket.Framework
 {
@@ -16,12 +17,13 @@ namespace SunSocket.Framework
         private Socket listenerSocket;
         IPEndPoint localEndPoint;
         IAsyncServer server;
-        ConfigInfo config;
-        public Listener(ConfigInfo config)
+        TcpServerConfig config;
+        public Listener(TcpServerConfig config, ServerEndPoint serverEndPoint,ILoger loger)
         {
             this.config = config;
-            this.server = new AsyncServer(config);
-            localEndPoint = new IPEndPoint(IPAddress.Parse(config.LConfig.IP), config.LConfig.Port);
+            this.server = new AsyncServer(config.MaxBufferPoolSize,config.BufferSize,config.MaxConnections,loger);
+            this.server.Name = serverEndPoint.Name;
+            this.localEndPoint = new IPEndPoint(IPAddress.Parse(serverEndPoint.IP), serverEndPoint.Port);
         }
 
         public IAsyncServer AsyncServer
@@ -38,7 +40,7 @@ namespace SunSocket.Framework
             {
                 this.listenerSocket = new Socket(this.localEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 this.listenerSocket.Bind(this.localEndPoint);
-                this.listenerSocket.Listen(this.config.ListenerBackLog);
+                this.listenerSocket.Listen(config.BackLog);
                 server.ListenerSocket =this.listenerSocket;
                 server.StartAccept(null);
             }

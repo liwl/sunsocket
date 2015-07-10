@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="Buffer\IFixedBuffer.cs" />
     <Compile Include="DI\CoreIoc.cs" />
-    <Compile Include="DI\RegisterFunc.cs" />
     <Compile Include="IAsyncClient.cs" />
     <Compile Include="IAsyncServer.cs" />
     <Compile Include="Buffer\IDynamicBuffer.cs" />

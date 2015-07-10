@@ -7,7 +7,7 @@ using SunSocket.Framework.Config;
 
 namespace SunSocket.Framework
 {
-    public class ConfigInfo
+    public class TcpServerConfig
     {
         /// <summary>
         /// 缓冲器数组大小
@@ -25,15 +25,11 @@ namespace SunSocket.Framework
             get;
             set;
         }
-        /// <summary>
-        /// 监听配置
-        /// </summary>
-        public ListenerConfig LConfig { get; set; }
-        int listenerBackLog = 100;
+        int backLog = 100;
         /// <summary>
         /// 监听器挂起队列的最大长度(默认100)
         /// </summary>
-        public int ListenerBackLog { get { return listenerBackLog; } set { listenerBackLog = value; } }
+        public int BackLog { get { return backLog; } set { backLog = value; } }
 
         int socketTimeOut= 60 * 1000; //Socket超时设置为60秒
         /// <summary>

@@ -15,17 +15,20 @@ namespace SunSocket.Framework
 {
     public class AsyncClient : IAsyncClient
     {
-        ConfigInfo config;
-        public AsyncClient(ConfigInfo config)
+        int bufferPoolSize, bufferSize;
+        ILoger loger;
+        public AsyncClient(int bufferPoolSize, int bufferSize, ILoger loger)
         {
-            this.config = config;
+            this.bufferPoolSize = bufferPoolSize;
+            this.bufferSize = bufferSize;
+            this.loger = loger;
         }
         public event EventHandler<ITcpClientSession> OnConnected;
         public event EventHandler<ReceiveCommond> OnReceived;
         public event EventHandler<ITcpClientSession> OnDisConnect;
         public void Connect(EndPoint remoteEndPoint) 
         {
-            TcpClientSession session = new TcpClientSession(remoteEndPoint, config);
+            TcpClientSession session = new TcpClientSession(remoteEndPoint,bufferPoolSize,bufferSize,loger);
             session.OnReceived += OnReceived;
             session.OnConnected += OnConnected;
             session.OnDisConnect += OnDisConnect;

@@ -49,12 +49,11 @@
     <Compile Include="Buffer\DynamicBuffer.cs" />
     <Compile Include="Buffer\FixedBufferPool.cs" />
     <Compile Include="Buffer\FixedBuffer.cs" />
-    <Compile Include="Config\ClientConfig.cs" />
-    <Compile Include="Config\ConfigInfo.cs" />
-    <Compile Include="Config\ListenerConfig.cs" />
+    <Compile Include="Config\TcpServerConfig.cs" />
+    <Compile Include="Config\ServerEndPoint.cs" />
     <Compile Include="EventArgsPool.cs" />
-    <Compile Include="Init.cs" />
     <Compile Include="Listener.cs" />
+    <Compile Include="Monitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocol\TcpClientPacketProtocol.cs" />
     <Compile Include="Protocol\TcpPacketProtocol.cs" />

@@ -11,5 +11,7 @@ namespace SunSocket.Core
     /// </summary>
     public interface IMonitor
     {
+        Task Start();
+        void Stop();
     }
 }

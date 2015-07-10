@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SunSocket.Framework.Config
 {
-    public class ListenerConfig
+    public class ServerEndPoint
     {
         public string Name { get; set; }
         public string IP { get; set; }

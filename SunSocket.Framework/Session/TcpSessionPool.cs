@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using SunSocket.Core.Session;
 using SunSocket.Framework.Protocol;
 using SunSocket.Core.DI;
-using Autofac;
+using SunSocket.Core;
 using SunSocket.Core.Protocol;
 
 namespace SunSocket.Framework.Session
@@ -17,12 +17,15 @@ namespace SunSocket.Framework.Session
     public class TcpSessionPool : ITcpSessionPool
     {
         private static ConcurrentStack<ITcpSession> pool=new ConcurrentStack<ITcpSession>();
-        private ConfigInfo config;
-        private int count = 0;
-        public TcpSessionPool(ConfigInfo config)
+        private int count = 0, bufferPoolSize, bufferSize, maxSessions;
+        ILoger loger;
+        public TcpSessionPool(int bufferPoolSize,int bufferSize,int maxSessions,ILoger loger)
         {
-            this.config = config;
-        }
+            this.bufferPoolSize = bufferPoolSize;
+            this.bufferSize = bufferSize;
+            this.maxSessions = maxSessions;
+            this.loger = loger;
+        } 
 
         public int Count
         {
@@ -45,14 +48,14 @@ namespace SunSocket.Framework.Session
             ITcpSession session;
             if (!pool.TryPop(out session))
             {
-                if(count <= config.MaxConnections)
+                if(count <= maxSessions)
                 {
                     Interlocked.Increment(ref count);
-                    session = new TcpSession();
-                    session.PacketProtocol = new TcpPacketProtocol(config.BufferSize,config.MaxBufferPoolSize);
+                    session = new TcpSession(loger);
+                    session.PacketProtocol = new TcpPacketProtocol(bufferSize,bufferPoolSize,loger);
                     session.SendEventArgs.Completed += session.PacketProtocol.SendComplate;//数据发送完成事件
 
-                    session.ReceiveEventArgs.SetBuffer(new byte[config.BufferSize], 0, config.BufferSize);
+                    session.ReceiveEventArgs.SetBuffer(new byte[bufferSize], 0, bufferSize);
                     session.ReceiveEventArgs.Completed += session.PacketProtocol.ReceiveComplate;
                    
                 }
@@ -62,10 +65,7 @@ namespace SunSocket.Framework.Session
 
         public void Push(ITcpSession item)
         {
-            if (item == null)
-                throw new Exception("item cannot be null");
-            else
-                pool.Push(item);
+            pool.Push(item);
         }
     }
 }

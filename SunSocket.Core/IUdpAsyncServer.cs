@@ -21,7 +21,13 @@ namespace SunSocket.Core
         /// 监听socket
         /// </summary>
         Socket ListenerSocket { get; set; }
+        /// <summary>
+        /// 开始接收数据
+        /// </summary>
         void Start();
+        /// <summary>
+        /// 接收数据
+        /// </summary>
         void Stop();
         void SendAsync(EndPoint endPoint, SendCommond cmd);
         /// <summary>

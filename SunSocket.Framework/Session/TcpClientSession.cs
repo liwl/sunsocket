@@ -12,18 +12,20 @@ namespace SunSocket.Framework.Session
     {
         EndPoint remoteEndPoint;
         byte[] receiveBuffer;
-        public TcpClientSession(EndPoint remoteEndPoint,ConfigInfo config)
+        ILoger loger;
+        public TcpClientSession(EndPoint remoteEndPoint, int bufferPoolSize, int bufferSize, ILoger loger)
         {
+            this.loger = loger;
             this.remoteEndPoint = remoteEndPoint;
             SessionId = ObjectId.GenerateNewId().ToString();//生成唯一sesionId
             ReceiveEventArgs = new SocketAsyncEventArgs();
             ReceiveEventArgs.RemoteEndPoint = remoteEndPoint;
             SendEventArgs = new SocketAsyncEventArgs();
             SendEventArgs.RemoteEndPoint = remoteEndPoint;
-            PacketProtocol = new TcpClientPacketProtocol(config.BufferSize, config.MaxBufferPoolSize);
+            PacketProtocol = new TcpClientPacketProtocol(bufferSize, bufferPoolSize, loger);
             PacketProtocol.Session = this;
             SendEventArgs.Completed += PacketProtocol.SendComplate;//数据发送完成事件
-            receiveBuffer = new byte[config.BufferSize];
+            receiveBuffer = new byte[bufferSize];
         }
         public DateTime ActiveDateTime
         {
@@ -97,8 +99,7 @@ namespace SunSocket.Framework.Session
             }
             else
             {
-                throw new Exception("连接失败");
-                //记录连接失败
+                loger.Error(string.Format("连接{0}失败",remoteEndPoint));
             }
         }
         public void DisConnect()
@@ -114,8 +115,7 @@ namespace SunSocket.Framework.Session
             }
             catch (Exception e)
             {
-                //日志记录
-                // Program.Logger.ErrorFormat("CloseClientSocket Disconnect client {0} error, message: {1}", socketInfo, E.Message);
+                loger.Fatal(e);
             }
             ConnectSocket.Close();
             ConnectSocket = null;
@@ -141,7 +141,7 @@ namespace SunSocket.Framework.Session
             }
             catch (Exception e)
             {
-                //日志记录
+                loger.Fatal(e);
             }
         }
     }

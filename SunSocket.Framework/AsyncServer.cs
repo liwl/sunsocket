@@ -16,7 +16,7 @@ namespace SunSocket.Framework
 {
     public class AsyncServer : IAsyncServer
     {
-        private ConfigInfo config;
+        ILoger loger;
         private ITcpSessionPool sessionPool;
         public Socket ListenerSocket { get; set; }
         public ConcurrentDictionary<string, ITcpSession> OnlineList { get; set; }
@@ -26,12 +26,12 @@ namespace SunSocket.Framework
             get;
             set;
         }
-
-        public AsyncServer(ConfigInfo config)
+        //构造函数
+        public AsyncServer(int bufferPoolSize, int bufferSize, int maxConnections,ILoger loger)
         {
-            this.config = config;
-            this.sessionPool = new TcpSessionPool(config);
+            this.sessionPool = new TcpSessionPool(bufferPoolSize,bufferSize,maxConnections,loger);
             this.OnlineList = new ConcurrentDictionary<string, ITcpSession>();
+            this.loger = loger;
         }
 
         //当接收到命令包时触发
@@ -84,7 +84,7 @@ namespace SunSocket.Framework
             }
             catch (Exception e)
             {
-                //日志记录错误
+                loger.Fatal(e);
             }
         }
         public void CloseSession(ITcpSession sesseion)

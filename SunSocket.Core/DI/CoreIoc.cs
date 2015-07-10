@@ -10,11 +10,11 @@ namespace SunSocket.Core.DI
     {
         static ContainerBuilder builder = new ContainerBuilder();
         static IContainer container;
-        static List<RegisterFunc> RegisterFuncList = new List<RegisterFunc>();
+        static List<Action<ContainerBuilder>> RegisterFuncList = new List<Action<ContainerBuilder>>();
         static object lockOjb = new object();
-        public static void Register(Action<ContainerBuilder> func, string assemblyGuid = null)
+        public static void Register(Action<ContainerBuilder> func)
         {
-            RegisterFuncList.Add(new RegisterFunc() { AssemblyGuid = assemblyGuid, Func = func, IsRegister = true });
+            RegisterFuncList.Add(func);
         }
         /// <summary>
         /// 构建容器
@@ -25,9 +25,9 @@ namespace SunSocket.Core.DI
             {
                 if (null == container)
                 {
-                    foreach (var rf in RegisterFuncList.Where(r => r.IsRegister))
+                    foreach (var rf in RegisterFuncList)
                     {
-                        rf.Func(builder);
+                        rf(builder);
                     }
                     container = builder.Build();
                 }
@@ -41,9 +41,9 @@ namespace SunSocket.Core.DI
             lock (lockOjb)
             {
                 var rebuilder = new ContainerBuilder();
-                foreach (var rf in RegisterFuncList.Where(r => r.IsRegister))
+                foreach (var rf in RegisterFuncList)
                 {
-                    rf.Func(rebuilder);
+                    rf(rebuilder);
                 }
                 builder = rebuilder;
                 container = builder.Build();

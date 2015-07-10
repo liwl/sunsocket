@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using SunSocket.Framework;
+using SunSocket.Core;
 using SunSocket.Core.Protocol;
 using SunSocket.Framework.Session;
 using SunSocket.Core.Session;
@@ -17,10 +18,10 @@ namespace SunSocket.Client
         static ITcpClientSession Session;
         static void Main(string[] args)
         {
-            var config = new ConfigInfo();
+            var config = new TcpServerConfig();
             config.BufferSize = 1024 * 4;
             config.MaxConnections = 60000;
-            AsyncClient client = new AsyncClient(config);
+            AsyncClient client = new AsyncClient(1024,3*1024,new Loger());
             client.OnReceived+= ReceiveCommond;
             client.OnConnected += Connected;
             client.Connect(new IPEndPoint(IPAddress.Parse("192.168.1.105"),9989));
@@ -47,6 +48,73 @@ namespace SunSocket.Client
             //li.Add(string.Format("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg));
             Console.WriteLine("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg);
             session.StartReceiveAsync();
+        }
+    }
+    public class Loger : ILoger
+    {
+        public void Debug(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Debug(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Error(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Fatal(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Fatal(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Info(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Log(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Trace(Exception exception)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Trace(string message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warning(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Warning(string message)
+        {
+            throw new NotImplementedException();
         }
     }
 }
