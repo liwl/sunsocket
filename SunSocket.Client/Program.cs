@@ -18,16 +18,13 @@ namespace SunSocket.Client
         static ITcpClientSession Session;
         static void Main(string[] args)
         {
-            var config = new TcpServerConfig();
-            config.BufferSize = 1024 * 4;
-            config.MaxConnections = 60000;
-            AsyncClient client = new AsyncClient(1024,3*1024,new Loger());
+            AsyncClient client = new AsyncClient(1024, 1024 * 4, new Loger());
             client.OnReceived+= ReceiveCommond;
             client.OnConnected += Connected;
-            client.Connect(new IPEndPoint(IPAddress.Parse("192.168.1.105"),9989));
+            client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"),9989));
             Console.ReadLine();
             short i =0;
-            while (i<500)
+            while (i<5)
             {
                 Task.Delay(1).Wait();
                 i++;
@@ -47,7 +44,6 @@ namespace SunSocket.Client
             string msg = Encoding.UTF8.GetString(cmd.Data);
             //li.Add(string.Format("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg));
             Console.WriteLine("sessionId:{0},cmdId:{1},msg:{2}", session.SessionId, cmd.CommondId, msg);
-            session.StartReceiveAsync();
         }
     }
     public class Loger : ILoger
@@ -69,12 +65,12 @@ namespace SunSocket.Client
 
         public void Error(string message)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(message);
         }
 
         public void Fatal(Exception e)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(e.Message);
         }
 
         public void Fatal(string message)
