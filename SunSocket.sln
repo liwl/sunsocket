@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.Udp", "SunSocket.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunSocket.UdpClient", "SunSocket.UdpClient\SunSocket.UdpClient.csproj", "{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{3FDCECF3-6112-4346-8275-162184B9D3A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D71E1FF0-869E-450C-8AA6-93E044D4EF7E} = {3FDCECF3-6112-4346-8275-162184B9D3A7}
+		{A93A33A2-C87B-46BC-B30B-3CA7931C374B} = {3FDCECF3-6112-4346-8275-162184B9D3A7}
+		{B8B60E74-FC96-4902-955C-3C6F8E06A0F1} = {3FDCECF3-6112-4346-8275-162184B9D3A7}
+		{AAFDBBB4-3DFA-4168-84FC-EB0A1D211E12} = {3FDCECF3-6112-4346-8275-162184B9D3A7}
 	EndGlobalSection
 EndGlobal
